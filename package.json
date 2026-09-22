@@ -1,0 +1,27 @@
+{
+  "name": "careerverify-monorepo",
+  "version": "2.0.0",
+  "description": "CareerVerify AI - Full Stack Job Fraud Detector and Company Verifier built with React, Node.js, and MongoDB",
+  "main": "server/index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "dev:server": "cd server && npm run dev",
+    "dev:client": "cd client && npm run dev",
+    "build": "cd client && npm run build",
+    "install:all": "npm install && cd server && npm install && cd ../client && npm install",
+    "start": "node server/index.js"
+  },
+  "keywords": [
+    "react",
+    "node",
+    "mongodb",
+    "fraud-detection",
+    "job-verifier",
+    "ai"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

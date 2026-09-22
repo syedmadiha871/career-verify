@@ -1,0 +1,246 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html, body {
+    background-color: #050914;
+    color: #f1f5f9;
+    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    overflow-x: hidden;
+    /* Hide Scrollbar globally across browsers */
+    -ms-overflow-style: none !important;
+    scrollbar-width: none !important;
+  }
+
+  /* Hide scrollbar for Webkit browsers */
+  ::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+
+  * {
+    -ms-overflow-style: none !important;
+    scrollbar-width: none !important;
+  }
+
+  /* Global Button Curvature Override */
+  button, .btn-base, input[type="button"], input[type="submit"] {
+    border-radius: 9999px !important;
+  }
+}
+
+/* God-Tier Mesh Background */
+.bg-god-mesh {
+  background-color: #050914;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(0, 242, 254, 0.12) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.12) 0px, transparent 50%),
+    radial-gradient(at 50% 100%, rgba(59, 130, 246, 0.1) 0px, transparent 50%);
+}
+
+/* Glassmorphism custom classes */
+.glass-panel-god {
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.45);
+  transform: translateZ(0);
+}
+
+.glass-panel-god-hover {
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, box-shadow;
+}
+.glass-panel-god-hover:hover {
+  background: rgba(20, 30, 55, 0.85);
+  border-color: rgba(56, 189, 248, 0.4);
+  transform: translateY(-3px) scale(1.005) translateZ(0);
+  box-shadow: 0 25px 50px -12px rgba(0, 242, 254, 0.22);
+}
+
+.glass-nav {
+  background: rgba(5, 9, 20, 0.85);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Neon Text & Gradient Highlights */
+.gradient-god-text {
+  background: linear-gradient(135deg, #00f2fe 0%, #38bdf8 35%, #8b5cf6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 30px rgba(0, 242, 254, 0.3));
+}
+
+.gradient-rose-text {
+  background: linear-gradient(135deg, #ff4b2b 0%, #ff416c 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ========================================================
+   MEDIUM ROUNDED PILL BUTTON DESIGN SYSTEM
+   ======================================================== */
+
+.btn-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  border-radius: 9999px !important;
+  font-size: 0.75rem; /* 12px text */
+  padding: 0.625rem 1.375rem; /* Medium balanced padding (10px 22px) */
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  overflow: hidden;
+  line-height: 1.25;
+}
+.btn-base:active {
+  transform: scale(0.95);
+}
+
+/* 1. Hero Shimmer Primary Button */
+.btn-god-hero {
+  background: linear-gradient(135deg, #00f2fe 0%, #0284c7 40%, #6366f1 100%);
+  color: #ffffff;
+  border-radius: 9999px !important;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 6px 25px -3px rgba(0, 242, 254, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+.btn-god-hero::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    60deg,
+    transparent,
+    rgba(255, 255, 255, 0.35),
+    transparent
+  );
+  transform: rotate(30deg) translateX(-100%);
+  transition: transform 0.8s ease;
+}
+.btn-god-hero:hover::after {
+  transform: rotate(30deg) translateX(100%);
+}
+.btn-god-hero:hover {
+  background: linear-gradient(135deg, #38bdf8 0%, #0284c7 40%, #4f46e5 100%);
+  box-shadow: 0 10px 35px -3px rgba(0, 242, 254, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+/* 2. Glass Outline Pill Button */
+.btn-god-glass {
+  background: rgba(15, 23, 42, 0.85);
+  color: #f8fafc;
+  border-radius: 9999px !important;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+.btn-god-glass:hover {
+  background: rgba(30, 41, 59, 0.95);
+  border-color: rgba(56, 189, 248, 0.55);
+  color: #ffffff;
+  box-shadow: 0 6px 25px rgba(56, 189, 248, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+/* 3. Primary Cyan Medium Pill Button */
+.btn-primary {
+  background: linear-gradient(135deg, #00f2fe 0%, #0284c7 50%, #2563eb 100%);
+  color: #ffffff;
+  border-radius: 9999px !important;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 4px 18px rgba(0, 242, 254, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+.btn-primary:hover {
+  background: linear-gradient(135deg, #38bdf8 0%, #0284c7 50%, #1d4ed8 100%);
+  box-shadow: 0 6px 24px rgba(0, 242, 254, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  transform: translateY(-1.5px);
+}
+
+/* 4. Secondary Pill Button */
+.btn-secondary {
+  background: rgba(15, 23, 42, 0.85);
+  color: #e2e8f0;
+  border-radius: 9999px !important;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+}
+.btn-secondary:hover {
+  background: rgba(30, 41, 59, 0.95);
+  color: #ffffff;
+  border-color: rgba(56, 189, 248, 0.5);
+  transform: translateY(-1.5px);
+}
+
+/* 5. Danger Pill Button */
+.btn-danger {
+  background: linear-gradient(135deg, #f43f5e 0%, #e11d48 50%, #be123c 100%);
+  color: #ffffff;
+  border-radius: 9999px !important;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 4px 18px rgba(244, 63, 94, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+.btn-danger:hover {
+  background: linear-gradient(135deg, #fb7185 0%, #e11d48 50%, #9f1239 100%);
+  box-shadow: 0 6px 24px rgba(244, 63, 94, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  transform: translateY(-1.5px);
+}
+
+/* 6. Purple Medium Pill Button */
+.btn-purple {
+  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 50%, #6d28d9 100%);
+  color: #ffffff;
+  border-radius: 9999px !important;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 4px 18px rgba(139, 92, 246, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+.btn-purple:hover {
+  background: linear-gradient(135deg, #a78bfa 0%, #7c3aed 50%, #5b21b6 100%);
+  box-shadow: 0 6px 24px rgba(139, 92, 246, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  transform: translateY(-1.5px);
+}
+
+/* Keyframe Animations */
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(1deg); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.85; transform: scale(1.06); }
+}
+
+@keyframes tickerMove {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-float {
+  animation: floatSlow 6s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 4s ease-in-out infinite;
+}
+
+.animate-ticker {
+  display: flex;
+  width: max-content;
+  animation: tickerMove 25s linear infinite;
+}
+.animate-ticker:hover {
+  animation-play-state: paused;
+}

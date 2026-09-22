@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Company Verification Result</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+
+body{
+    background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:'Segoe UI',sans-serif;
+}
+
+.result-card{
+
+    width:850px;
+    background:white;
+    border-radius:25px;
+    padding:40px;
+    box-shadow:0 20px 45px rgba(0,0,0,.35);
+
+}
+
+.progress{
+
+    height:28px;
+    border-radius:30px;
+
+}
+
+.score{
+
+    font-size:55px;
+    font-weight:bold;
+    color:#198754;
+
+}
+
+.reason{
+
+    background:#f8f9fa;
+    border-left:5px solid #198754;
+    padding:12px;
+    margin-bottom:10px;
+    border-radius:8px;
+
+}
+
+.footer-btn{
+
+    margin-top:30px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+    <%- include("partials/navbar") %>
+
+<div class="result-card">
+
+<h2 class="text-center text-primary fw-bold">
+
+🏢 Company Verification Result
+
+</h2>
+
+<hr>
+
+<h3 class="text-center">
+
+<%= company_name %>
+
+</h3>
+
+<div class="text-center mt-4">
+
+<div class="score">
+
+<%= score %>%
+
+</div>
+
+<p class="text-muted">
+
+Trust Score
+
+</p>
+
+</div>
+
+<div class="progress mb-4">
+
+<div
+class="progress-bar
+<%= score>=80 ? 'bg-success' : score>=50 ? 'bg-warning' : 'bg-danger' %>"
+style="width:<%= score %>%">
+
+<%= score %>%
+
+</div>
+
+</div>
+
+<div class="alert
+<%= status==='Verified'
+? 'alert-success'
+: status==='Needs Manual Review'
+? 'alert-warning'
+: 'alert-danger' %> text-center">
+
+<h4>
+
+<%= status %>
+
+</h4>
+
+</div>
+
+<table class="table table-bordered">
+
+<tr>
+
+<th width="35%">🌐 Website</th>
+
+<td><%= website %></td>
+
+</tr>
+
+<tr>
+
+<th>📧 Recruiter Email</th>
+
+<td><%= email %></td>
+
+</tr>
+
+</table>
+
+<h4 class="mt-4">
+
+Verification Checks
+
+</h4>
+
+<% reasons.forEach(function(reason){ %>
+
+<div class="reason">
+
+<%= reason %>
+
+</div>
+
+<% }) %>
+
+<% if(reasons.length===0){ %>
+
+<div class="alert alert-success">
+
+✔ No suspicious indicators were detected.
+
+</div>
+
+<% } %>
+
+<div class="text-center footer-btn">
+
+<a href="/company" class="btn btn-success btn-lg">
+
+🔄 Verify Another Company
+
+</a>
+
+<a href="/" class="btn btn-dark btn-lg ms-2">
+
+🏠 Home
+
+</a>
+
+</div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
