@@ -29,11 +29,11 @@ export default function AdminRoute({ children }) {
             <span>Switch to Admin Account to Access Control Center</span>
           </div>
           <Link
-            to="/auth"
+            to="/auth?mode=admin"
             className="btn-base btn-primary w-full py-3 text-xs font-black flex items-center justify-center space-x-2"
           >
             <KeyRound className="w-4 h-4" />
-            <span>Sign In as Admin (admin@careerverify.com)</span>
+            <span>Login to Admin Portal</span>
             <ArrowRight className="w-4 h-4 ml-1" />
           </Link>
         </div>

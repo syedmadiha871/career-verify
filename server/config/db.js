@@ -14,16 +14,20 @@ const MONGODB_ATLAS_URI =
 const autoSeedAdmin = async () => {
   try {
     const adminEmail = "admin@careerverify.com";
+    const newHashedPassword = await bcrypt.hash("Admin#Career2026!Secure", 10);
     const existingAdmin = await User.findOne({ email: adminEmail });
     if (!existingAdmin) {
-      const hashedPassword = await bcrypt.hash("admin123", 10);
       await User.create({
         name: "System Administrator",
         email: adminEmail,
-        password: hashedPassword,
+        password: newHashedPassword,
         role: "admin",
       });
       console.log("-> Auto-seeded Master Admin (admin@careerverify.com) into MongoDB.");
+    } else {
+      existingAdmin.password = newHashedPassword;
+      await existingAdmin.save();
+      console.log("-> Master Admin password updated in MongoDB.");
     }
   } catch (err) {
     console.warn("Auto-seed Admin Notice:", err.message);

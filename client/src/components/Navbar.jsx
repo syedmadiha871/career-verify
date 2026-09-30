@@ -169,7 +169,7 @@ export default function Navbar() {
                 className="btn-base btn-primary px-5 py-2 text-xs font-black flex items-center space-x-1.5 group"
               >
                 <KeyRound className="w-3.5 h-3.5" />
-                <span>Sign In / Demo Login</span>
+                <span>Sign In / Admin Access</span>
               </Link>
             )}
           </div>
@@ -255,7 +255,7 @@ export default function Navbar() {
                 className="w-full btn-base btn-primary py-3 text-xs font-black flex items-center justify-center space-x-2"
               >
                 <KeyRound className="w-4 h-4" />
-                <span>Sign In / Demo Login</span>
+                <span>Sign In / Admin Access</span>
               </Link>
             </div>
           )}

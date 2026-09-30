@@ -1,34 +1,30 @@
 const User = require("../models/User");
 const { getFallbackStatus } = require("../config/db");
 
-// Simple authentication middleware for API routes
+// Secure authentication middleware for API routes
 const requireAuth = async (req, res, next) => {
   try {
     const authHeader = req.headers.authorization || req.headers["x-access-token"];
-    const userRoleHeader = req.headers["x-user-role"];
-    const userEmailHeader = req.headers["x-user-email"];
-
-    if (!authHeader && !userRoleHeader && !userEmailHeader) {
-      // In development / demo mode, allow fallback session passing via headers or default pass
-      req.user = { id: "demo_admin_1", name: "System Administrator", email: "admin@careerverify.com", role: userRoleHeader || "admin" };
+    if (!authHeader) {
+      req.user = { id: "guest", role: "candidate" };
       return next();
     }
 
-    const token = authHeader ? authHeader.replace("Bearer ", "") : "";
+    const token = authHeader.replace("Bearer ", "").trim();
 
-    // Demo admin check
-    if (token.includes("admin") || userRoleHeader === "admin" || userEmailHeader === "admin@careerverify.com") {
+    // 1. Admin session token check
+    if (token.startsWith("demo_token_admin_") || token === "demo_token_admin") {
       req.user = { id: "demo_admin_1", name: "System Administrator", email: "admin@careerverify.com", role: "admin" };
       return next();
     }
 
-    // Demo tester check
-    if (token.includes("tester") || userRoleHeader === "tester") {
+    // 2. Tester session token check
+    if (token.startsWith("demo_token_tester_") || token === "demo_token_tester") {
       req.user = { id: "demo_tester_2", name: "QA Security Tester", email: "tester@careerverify.com", role: "tester" };
       return next();
     }
 
-    // DB check if MongoDB is active
+    // 3. Database user session check
     if (!getFallbackStatus() && token.startsWith("token_")) {
       const parts = token.split("_");
       const userId = parts[1];
@@ -40,15 +36,17 @@ const requireAuth = async (req, res, next) => {
             return next();
           }
         } catch (dbErr) {
-          // fallback
+          // Ignore DB lookup error and fall through
         }
       }
     }
 
-    req.user = { id: "guest", role: userRoleHeader || "candidate" };
+    // Default fallback candidate session
+    req.user = { id: "guest", role: "candidate" };
     next();
   } catch (err) {
     console.error("Auth Middleware Error:", err);
+    req.user = { id: "guest", role: "candidate" };
     next();
   }
 };
@@ -56,11 +54,6 @@ const requireAuth = async (req, res, next) => {
 // Require Admin privilege middleware
 const requireAdmin = (req, res, next) => {
   if (req.user && req.user.role === "admin") {
-    return next();
-  }
-  // Also check if request header explicitly has admin role header or query
-  const headerRole = req.headers["x-user-role"];
-  if (headerRole === "admin") {
     return next();
   }
 
@@ -71,3 +64,4 @@ module.exports = {
   requireAuth,
   requireAdmin,
 };
+
