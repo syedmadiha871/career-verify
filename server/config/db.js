@@ -4,6 +4,7 @@ const bcrypt = require("bcryptjs");
 require("dotenv").config();
 
 let isFallbackMode = false;
+let connPromise = null;
 
 const MONGODB_ATLAS_URI =
   process.env.MONGODB_URI ||
@@ -15,7 +16,7 @@ const autoSeedAdmin = async () => {
   try {
     const adminEmail = "admin@careerverify.com";
     const newHashedPassword = await bcrypt.hash("Admin#Career2026!Secure", 10);
-    const existingAdmin = await User.findOne({ email: adminEmail });
+    const existingAdmin = await User.findOne({ email: adminEmail }).exec();
     if (!existingAdmin) {
       await User.create({
         name: "System Administrator",
@@ -35,24 +36,41 @@ const autoSeedAdmin = async () => {
 };
 
 const connectDB = async () => {
+  if (mongoose.connection.readyState === 1) {
+    isFallbackMode = false;
+    return mongoose.connection;
+  }
+
+  if (connPromise) {
+    try {
+      await connPromise;
+      return mongoose.connection;
+    } catch (e) {
+      connPromise = null;
+    }
+  }
+
   try {
     console.log("Connecting to MongoDB Atlas Cluster0...");
-    await mongoose.connect(MONGODB_ATLAS_URI, {
-      serverSelectionTimeoutMS: 4000,
+    connPromise = mongoose.connect(MONGODB_ATLAS_URI, {
+      serverSelectionTimeoutMS: 2500,
+      connectTimeoutMS: 2500,
+      bufferCommands: false,
     });
+    await connPromise;
     isFallbackMode = false;
     console.log("MongoDB Atlas Connected Successfully to Database 'careerverify'.");
     await autoSeedAdmin();
+    return mongoose.connection;
   } catch (error) {
+    connPromise = null;
     isFallbackMode = true;
     console.warn("MongoDB Atlas Notice: " + error.message);
-    if (error.message.includes("authentication failed")) {
-      console.warn("-> Check if MongoDB Atlas Database User password or IP Whitelist (0.0.0.0/0) is configured.");
-    }
-    console.warn("Operating smoothly with high-speed memory fallback store.");
+    return null;
   }
 };
 
 const getFallbackStatus = () => isFallbackMode;
 
 module.exports = { connectDB, getFallbackStatus, autoSeedAdmin };
+
